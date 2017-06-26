@@ -1,0 +1,20 @@
+<html>
+	<body>
+	 	{%- for user in users %}
+      		<tr>
+        		<td>{{ user.id }}</td>
+			<td>{{ user.name }}</td>
+		</tr>
+		{%- endfor %}
+
+		<h2>Add a new user</h2>
+		
+		<form action="" method=post>
+			
+			<p>Name:
+      			<input type=text name=name value="{{ request.form.name }}"/>
+    			<p>
+      			<input type=submit value="Create entry"/>
+  		</form>
+  	</body>
+</html>
