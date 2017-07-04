@@ -1,6 +1,10 @@
+import glob
+import os
+from datetime import datetime
 from flask import Flask
-from flask import render_template, request, flash
+from flask import render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
+from camera import take_picture
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///watchtower'
@@ -9,27 +13,32 @@ app.config['SECRET_KEY'] = '\xfb\x12\xdf\xa1@i\xd6>V\xc0\xbb\x8fp\x16#Z\x0b\x81\
 
 db = SQLAlchemy(app)
 
-class User(db.Model):
-    __tablename__ = 'users'
-    id = db.Column('id', db.Integer, primary_key=True)
-    name = db.Column(db.String(60))
-
-    def __init__(self, name):
-	    self.name = name
+def get_images():
+    images = glob.glob('./static/camera-images/*.jpg')
+    return sorted(images)
 
 @app.route('/', methods=['GET', 'POST'])
-def new():
-    if request.method == 'POST':
-        if not request.form['name']:
-            flash('Title is required', 'error')
-        else:
-            user = User(request.form['name'])
-            db.session.add(user)
-            db.session.commit()
-            flash(u'Todo item was successfully created')
-    return render_template('users.html', 
-		    users=User.query.all()
+def index():
+    images = get_images()
+
+    return render_template('index.html', 
+		    images=images
 		    )
+
+@app.route('/picture', methods=['POST'])
+def picture():
+    take_picture()
+    images = get_images()
+    
+    if len(images) >= 7:
+        os.remove(images[0])
+
+    return redirect(url_for('index'))
+
+@app.route('/toggle-sensor', methods=['POST'])
+def toggle_sensor():
+    #toggle()
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
 	app.run(debug=True, host='0.0.0.0')

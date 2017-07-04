@@ -4,15 +4,16 @@ import sys
 import config
 from gpiozero import MotionSensor, Buzzer, LED, Button
 from instapush import Instapush, App
+from camera import take_picture
 
 device = App(appid=config.appid, secret=config.secret)
 sensor = MotionSensor(4)
 buzzer = Buzzer(17)
 led = LED(18)
 button = Button(13)
+system_active = False
 
 config.alerts_triggered = 0
-config.system_active = False
 
 def flash():
 	print('Motion detected')
@@ -32,24 +33,23 @@ def startup():
 		time.sleep(1)
 
 def toggle():
-	if not config.system_active:
+	print('Button pressed')
+	if not system_active:
 		startup()
-		config.system_active = True
+		system_active = True
 	else: 
-		config.system_active = False
+		system_active = False
 		config.alerts_triggered = 0
 
 def alert():
-	# Refactor
 	if config.alerts_triggered >= config.max_alerts:
-		sys.exit()
+		return sys.exit()
 
-	if config.alerts_triggered < config.max_notifications:
-		device.notify(
-				event_name='alert', 
-				trackers={ 'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
-				)
-	
+	device.notify(
+			event_name='alert', 
+			trackers={ 'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+			)
+	take_picture()
 	flash()	
 	config.alerts_triggered += 1
 
@@ -57,7 +57,7 @@ try:
 	while True:
 		button.when_pressed = toggle
 		
-		if config.system_active:
+		if system_active:
 			sensor.wait_for_motion()
 			sensor.when_motion = alert()
 			
