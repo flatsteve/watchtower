@@ -7,11 +7,11 @@
 	<body>
 		<h1 class="title">Watchtower</h1>
         <div class="actions">
-            <form method="post" action="{{ url_for('picture') }}">
+            <form method="post" action="{{ url_for('api.picture') }}">
                 <button type="submit">Take picture</button>
             </form>
 
-            <form method="post" action="{{ url_for('toggle_sensor') }}">
+            <form method="post" action="{{ url_for('api.toggle_sensor') }}">
                 <button type="submit">Toggle sensor</button>
             </form>
         </div>

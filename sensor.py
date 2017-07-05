@@ -11,9 +11,9 @@ sensor = MotionSensor(4)
 buzzer = Buzzer(17)
 led = LED(18)
 button = Button(13)
-system_active = False
 
 config.alerts_triggered = 0
+config.system_active = False
 
 def flash():
 	print('Motion detected')
@@ -34,11 +34,11 @@ def startup():
 
 def toggle():
 	print('Button pressed')
-	if not system_active:
+	if not config.system_active:
 		startup()
-		system_active = True
+		config.system_active = True
 	else: 
-		system_active = False
+		config.system_active = False
 		config.alerts_triggered = 0
 
 def alert():
@@ -50,14 +50,14 @@ def alert():
 			trackers={ 'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 			)
 	take_picture()
-	flash()	
+	flash()
 	config.alerts_triggered += 1
 
 try:
 	while True:
 		button.when_pressed = toggle
 		
-		if system_active:
+		if config.system_active:
 			sensor.wait_for_motion()
 			sensor.when_motion = alert()
 			
