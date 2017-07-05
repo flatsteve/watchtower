@@ -5,4 +5,4 @@ max_notifications = 10
 max_alerts = 100
 delay_between_alerts = 6
 startup_delay = 10
-
+system_active = False
