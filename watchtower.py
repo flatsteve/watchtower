@@ -1,4 +1,5 @@
-from flask import Flask, render_template, url_for, request, redirect
+import config
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from routes import api
 from utils import get_images
@@ -16,7 +17,8 @@ def index():
     images = get_images()
 
     return render_template('index.html', 
-		    images=images
+            images=images,
+            active=config.system_active
 		    )
 
 if __name__ == '__main__':

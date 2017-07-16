@@ -1,25 +1,38 @@
+<!doctype html>
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel= "stylesheet" type= "text/css" href="{{ url_for('static',filename='styles.css') }}">
+    <head>
+        <title>Watchtower</title>
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel= "stylesheet" type= "text/css" href="{{ url_for('static',filename='styles.css') }}">
 	</head>
 	
-	<body>
-		<h1 class="title">Watchtower</h1>
+    <body>
+        <h1 class="title {{ 'title--active' if active else 'title--inactive'}}">
+            WATCHTOWER<br/>1200
+        </h1>
+        
         <div class="actions">
             <form method="post" action="{{ url_for('api.picture') }}">
                 <button type="submit">Take picture</button>
             </form>
 
-            <form method="post" action="{{ url_for('api.toggle_sensor') }}">
+            <form method="post" action="{{ url_for('api.toggle_active') }}">
                 <button type="submit">Toggle sensor</button>
             </form>
         </div>
         
         <div class="images">	
-		{%- for image in images %}
-			<img src="{{ image }}"/>
-		{%- endfor %}
-		</div>
+            {%- for image in images %}
+            <div class="image">
+                <img src="{{ image }}"/>
+                <h5>{{ image.rsplit('.', 1)[0] }}</h5>
+            </div>
+		    {%- endfor %}
+        </div>
+
+        <script src="{{ url_for('static', filename='scripts.js') }}"></script>
   	</body>
 </html>

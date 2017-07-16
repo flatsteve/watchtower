@@ -1,9 +1,9 @@
 import sys
 import glob
 import time
+import datetime
 import config
 from instapush import Instapush, App
-from camera import take_picture
 from gpiozero import Buzzer, LED
 
 device = App(appid=config.appid, secret=config.secret)
@@ -12,7 +12,7 @@ led = LED(18)
 
 def get_images():
     images = glob.glob('./static/camera-images/*.jpg')
-    return sorted(images)
+    return sorted(images, reverse=True)
 
 def startup():
     print('Starting Watchtower in...')
@@ -48,6 +48,8 @@ def alert():
         trackers={ 'time': datetime.datetime.now().strftime("%Y-%m-%d%H:%M:%S")}
         )
     
+    # Avoid circular dependancy 
+    from camera import take_picture
     take_picture()
     flash()
     config.alerts_triggered += 1

@@ -1,23 +1,48 @@
 body {
-	background-color: #00171F;
+	background-color: #f5f5f5;
 	font-family: 'Helvetica';
-	padding: 1.25rem;	
+	padding: 1.25rem;
+    margin: 0;
 }
 
 .title {
-	color: #00a7E1;
+	color: #eceeef;
+    font-family: serif;
+    font-size: 2.5rem;
+    font-style: italic;
+    margin-top: 0;
+    text-shadow: 0 -1px 0 #B9BEC0;
+}
+
+.title--active {
+    color: #69B111;
+}
+
+.title--inactive {
+    color: #C62D32;
 }
 
 .images {
 	display: grid;
 	grid-gap: 1rem;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-auto-rows: minmax(26vh, 190px);
+    grid-auto-rows: minmax(100%, 190px);
 }
 
-.images img {
+.image img {
 	border: 2px solid #00a7E1;
     width: 100%;
+}
+
+.image { 
+    text-align: center;
+}
+
+.actions {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
 }
 
 button {
@@ -26,7 +51,13 @@ button {
     border-radius: .25rem;
     color: #fff;
     font-weight: bold;
-    min-width: 15rem;
+    min-width: 8rem;
     outline: none;
     padding: 1.25rem;
+}
+
+button[disabled],
+button:disabled { 
+    background-color: #ccc;
+    color: #333;
 }

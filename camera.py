@@ -1,8 +1,15 @@
 import picamera
 import time
+import os
+from utils import get_images
 
 def take_picture():
     camera = picamera.PiCamera()
+    images = get_images()
+    
+    if len(images) >= 3:
+        os.remove(images[-1])
+   
     print('Capturing picture')
-    camera.capture("./static/camera-images/" + time.strftime("%y%m%d_%H-%M-%S") + ".jpg")
+    camera.capture("./static/camera-images/" + str(int(time.time())) + ".jpg")
     camera.close()
