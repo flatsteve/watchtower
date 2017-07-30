@@ -3,7 +3,7 @@ import config
 import subprocess
 from flask import Blueprint, url_for, redirect, request
 from camera import take_picture
-from utils import get_images, toggle, startup, reset
+from utils import get_images, remove_image, toggle, startup, reset
 
 api = Blueprint('api', __name__)
 
@@ -14,7 +14,7 @@ def picture():
     if request.method == 'POST' and url is None:
         take_picture()
     else:
-        print('deleting picture', url)
+        remove_image(url)
 
     return redirect(url_for('index'))
 

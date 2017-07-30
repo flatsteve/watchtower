@@ -7,8 +7,8 @@
         </h1>
 
         <form method="post" action="{{ url_for('api.toggle_active') }}">
-            <button class="button button--rect {{ 'button--inactive' if not active }}" type="submit">
-                Turn {{ 'off' if active else 'on' }}
+            <button class="button button--big {{ 'button--inactive' if not active }}" type="submit">
+                {{ 'Deactivate' if active else 'Activate' }}
             </button>
         </form>
     </div>
@@ -17,13 +17,16 @@
         {%- for image in images %}
         <div class="image">
             <a href="{{ image['url'] }}"><img src="{{ image['url'] }}"/></a>
-            <h4>{{ image['date'] }}</h4>
             
-            <form method="post" action="{{ url_for('api.picture', url=image['url']) }}">
-                <button type="submit">
-                    Delete
-                </button>
-            </form>
+            <div class="image__footer"> 
+                <h4>{{ image['date'] }}</h4>
+            
+                <form method="post" action="{{ url_for('api.picture', url=image['url']) }}">
+                    <button  class="button" type="submit">
+                        Delete
+                    </button>
+                </form>
+            </div>
         </div>
         {%- endfor %}
     </div>

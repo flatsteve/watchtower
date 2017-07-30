@@ -1,7 +1,4 @@
-import sys
-import glob
-import time
-import datetime
+import sys, glob, time, datetime, os
 import config
 from instapush import Instapush, App
 from gpiozero import Buzzer, LED
@@ -17,6 +14,12 @@ def reset():
 def get_images():
     images = glob.glob('./static/camera-images/*.jpg')
     return sorted(images, reverse=True)
+
+def remove_image(url):
+    try:
+        os.remove(url)
+    except OSError:
+        print('Failed to remove image')
 
 def startup():
     reset()

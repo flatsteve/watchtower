@@ -1,4 +1,4 @@
-import config, re, datetime
+import config, re, datetime, pytz
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from routes import api
@@ -21,7 +21,8 @@ def index():
         image_list.append({ 
             'url': imageUrl, 
             'date': datetime.datetime.fromtimestamp(
-                int(re.findall(r'[0-9]+', imageUrl)[0])).strftime('%a, %d %b %Y at %H:%M%p')
+                int(re.findall(r'[0-9]+', imageUrl)[0]), tz=pytz.timezone('Europe/London'))
+                .strftime('%a, %d %b %Y at %H:%M%p')
             })
 
     return render_template('index.html', 
