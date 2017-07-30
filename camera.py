@@ -7,7 +7,7 @@ def take_picture():
     camera = picamera.PiCamera()
     images = get_images()
     
-    if len(images) >= 3:
+    if len(images) >= 5:
         os.remove(images[-1])
    
     print('Capturing picture')

@@ -1,4 +1,4 @@
-import config
+import config, re, datetime
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from routes import api
@@ -12,14 +12,26 @@ app.register_blueprint(api, url_prefix='/api')
 
 db = SQLAlchemy(app)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def index():
     images = get_images()
+    image_list = []
+
+    for imageUrl in images:
+        image_list.append({ 
+            'url': imageUrl, 
+            'date': datetime.datetime.fromtimestamp(
+                int(re.findall(r'[0-9]+', imageUrl)[0])).strftime('%a, %d %b %Y at %H:%M%p')
+            })
 
     return render_template('index.html', 
-            images=images,
+            images=image_list,
             active=config.system_active
 		    )
+
+@app.route('/settings', methods=['GET'])
+def settings():
+    return render_template('settings.html')
 
 if __name__ == '__main__':
 	app.run(debug=True, host='0.0.0.0')
