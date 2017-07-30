@@ -1,5 +1,8 @@
 import sys, glob, time, datetime, os
 import config
+
+from db import db
+from db import Settings
 from instapush import Instapush, App
 from gpiozero import Buzzer, LED
 
@@ -14,6 +17,14 @@ def reset():
 def get_images():
     images = glob.glob('./static/camera-images/*.jpg')
     return sorted(images, reverse=True)
+
+def get_settings():
+    return Settings.query.get(1)
+
+def save_settings(settings):
+    current_settings = Settings.query.get(1)
+    current_settings.iso = settings
+    db.session.commit()
 
 def remove_image(url):
     try:

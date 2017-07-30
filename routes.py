@@ -1,9 +1,8 @@
-import os
+import os, subprocess
 import config
-import subprocess
 from flask import Blueprint, url_for, redirect, request
 from camera import take_picture
-from utils import get_images, remove_image, toggle, startup, reset
+from utils import get_images, remove_image, toggle, startup, reset, save_settings
 
 api = Blueprint('api', __name__)
 
@@ -32,3 +31,11 @@ def toggle_active():
 
     return redirect(url_for('index'))
 
+@api.route('/camera-settings', methods=['POST'])
+def camera_settings():
+    settings = request.form.get('iso', None)
+   
+    if settings is not None:
+        save_settings(settings)
+
+    return redirect(url_for('settings'))

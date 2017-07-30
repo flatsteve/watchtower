@@ -2,20 +2,25 @@
 
 {% block content %}
     <div>
-        <h3>ISO setting: <span id="label">200</span></h3>
+        <h3>ISO setting: <span id="label">{{settings.iso}}</span></h3>
 
-        <input type="range" id="iso" list="iso" min="100" max="800" step="100" value="200">
-        <datalist id="iso">
-          <option value="100" label="100">
-          <option value="200" label="200">
-          <option value="300" label="300">
-          <option value="400" label="400">
-          <option value="500" label="500">
-          <option value="600" label="600">
-          <option value="800" label="800">
-        </datalist>
+        <form method="post" action="{{ url_for('api.camera_settings') }}">
+            <input type="range" id="iso" name="iso" list="iso" min="100" max="800" step="100" value="{{settings.iso}}">
+            
+            <datalist id="iso">
+              <option value="100" label="100">
+              <option value="200" label="200">
+              <option value="300" label="300">
+              <option value="400" label="400">
+              <option value="500" label="500">
+              <option value="600" label="600">
+              <option value="800" label="800">
+            </datalist>
 
-        <button>Test settings</button>
+            <button class="button button--big">
+                Test settings
+            </button>
+        </form>
     </div>
 
     <script src="{{ url_for('static', filename='settings.js') }}"></script>
