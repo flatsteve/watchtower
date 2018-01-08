@@ -1,8 +1,7 @@
 import sys, glob, time, datetime, os
 import config
 
-from db import db
-from db import Settings
+from db import db, Settings
 from instapush import Instapush, App
 from gpiozero import Buzzer, LED
 
@@ -11,8 +10,11 @@ buzzer = Buzzer(17)
 led = LED(26)
 
 def reset():
-    led.off()
-    buzzer.off()
+    try:
+        led.off()
+        buzzer.off()
+    except: 
+        pass
 
 def get_images():
     images = glob.glob('./static/camera-images/*.jpg')
@@ -23,7 +25,8 @@ def get_settings():
 
 def save_settings(settings):
     current_settings = Settings.query.get(1)
-    current_settings.iso = settings
+    current_settings.iso = settings.get('iso', 0)
+    current_settings.shutter_speed = settings.get('shutter_speed', 0)
     db.session.commit()
 
 def remove_image(url):
@@ -38,10 +41,14 @@ def startup():
 
     for i in range(config.startup_delay, 0, -1):
         print(i)
-        led.on()
-        time.sleep(1)
-        led.off()
-        time.sleep(1)
+        try:
+            led.on()
+            time.sleep(1)
+            led.off()
+            time.sleep(1)
+        except: 
+            print('Problem with pins')
+            pass
 
 def toggle():
     print('Toggling system')
@@ -54,11 +61,15 @@ def toggle():
         reset()
 
 def flash():
-    led.blink()
-    buzzer.beep()
-    time.sleep(config.delay_between_alerts)
-    led.off()
-    buzzer.off()
+    try:
+        led.blink()
+        buzzer.beep()
+        time.sleep(config.delay_between_alerts)
+        led.off()
+        buzzer.off()
+    except:
+        print('Problem with pins')
+        pass
 
 def alert():
     if config.alerts_triggered >= config.max_alerts:

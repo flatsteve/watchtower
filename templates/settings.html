@@ -2,25 +2,45 @@
 
 {% block content %}
     <div>
-        <h3>ISO setting: <span id="label">{{settings.iso}}</span></h3>
-
         <form method="post" action="{{ url_for('api.camera_settings') }}">
-            <input type="range" id="iso" name="iso" list="iso" min="100" max="800" step="100" value="{{settings.iso}}">
+            <div>
+                <label>ISO setting: <span id="iso-label">{{settings.iso}}</span></label>
+                
+                <input type="range" id="iso-input" name="iso" list="iso" min="0" max="800" step="100" value="{{settings.iso}}">
+                
+                <datalist id="iso">
+                  <option value="100" label="100">
+                  <option value="200" label="200">
+                  <option value="300" label="300">
+                  <option value="400" label="400">
+                  <option value="500" label="500">
+                  <option value="600" label="600">
+                  <option value="800" label="800">
+                </datalist>
+            </div>
             
-            <datalist id="iso">
-              <option value="100" label="100">
-              <option value="200" label="200">
-              <option value="300" label="300">
-              <option value="400" label="400">
-              <option value="500" label="500">
-              <option value="600" label="600">
-              <option value="800" label="800">
-            </datalist>
+            <div>
+                <label>Shutter speed: <span id="speed-label">{{settings.shutter_speed}}</span></label>
+                
+                <input type="range" id="speed-input" name="shutter_speed" list="speed" min="0" max="6000000" step="10000" value="{{settings.shutter_speed}}">
+
+                <datalist id="speed">
+                  <option value="0" label="Auto">
+                  <option value="20000" label="200">
+                  <option value="50000" label="500">
+                  <option value="100000" label="1">
+                  <option value="200000" label="2">
+                  <option value="500000" label="5">
+                  <option value="6000000" label="60">
+                </datalist>
+            </div>
 
             <button class="button button--big">
                 Test settings
             </button>
         </form>
+
+        <a href="{{url_for('index')}}">Home</a>
     </div>
 
     <script src="{{ url_for('static', filename='settings.js') }}"></script>

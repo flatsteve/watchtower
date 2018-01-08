@@ -33,7 +33,7 @@ def toggle_active():
 
 @api.route('/camera-settings', methods=['POST'])
 def camera_settings():
-    settings = request.form.get('iso', None)
+    settings = request.form
    
     if settings is not None:
         save_settings(settings)

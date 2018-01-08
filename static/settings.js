@@ -1,7 +1,12 @@
 (() => {
-    const rangeInput = document.getElementById("iso");
+    const isoInput = document.getElementById("iso-input");
+    const speedInput = document.getElementById("speed-input");
 
-    rangeInput.addEventListener("input", event => {
-        document.getElementById("label").innerHTML = event.target.value;
+    isoInput.addEventListener("input", event => {
+        document.getElementById("iso-label").innerHTML = event.target.value;
     });
+
+    speedInput.addEventListener("input", event => {
+        document.getElementById("speed-label").innerHTML = Math.round(event.target.value / 100000);
+    }); 
 })();
