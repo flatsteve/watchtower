@@ -31,8 +31,6 @@
         {%- endfor %}
     </div>
 
-    <a href="{{url_for('settings')}}">Settings</a>
-
     <form method="post" action="{{ url_for('api.picture') }}">
         <button class="button button--fab" type="submit">
             Picture
