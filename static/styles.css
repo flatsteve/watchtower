@@ -29,6 +29,13 @@ body {
 .image {
     border: 2px solid #222120;
     padding: .25rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.image a {
+    display: block;
 }
 
 .image img {
@@ -38,6 +45,7 @@ body {
 .image__footer {
     align-items:center;
     display: flex;
+    height: 100%;
     padding: .25rem;
 }
 

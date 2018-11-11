@@ -1,11 +1,10 @@
 import sys, glob, time, datetime, os
 import config
+import requests
 
 from db import db, Settings
-from instapush import Instapush, App
 from gpiozero import Buzzer, LED
 
-device = App(appid=config.appid, secret=config.secret)
 buzzer = Buzzer(17)
 led = LED(26)
 
@@ -62,6 +61,7 @@ def toggle():
 
 def flash():
     try:
+        print("Flash")
         led.blink()
         buzzer.beep()
         time.sleep(config.delay_between_alerts)
@@ -75,11 +75,10 @@ def alert():
     if config.alerts_triggered >= config.max_alerts:
         return
     try:
-        device.notify(
-            event_name='alert',
-            trackers={ 'time': datetime.datetime.now().strftime("%Y-%m-%d%H:%M:%S") }
-            )
+        r = requests.post("https://hooks.zapier.com/hooks/catch/2853925/8shq4l/", data={'time': time.time()})
+        print(r.status_code, r.reason)
     except Exception:
+        print("Somthing went wrong...")
         pass
     
     # Avoid circular dependancy 
