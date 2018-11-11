@@ -2,7 +2,6 @@ import picamera, time, os
 
 from utils import get_images
 from db import Settings
-from time import sleep
 
 def take_picture():
     images = get_images()
@@ -17,14 +16,13 @@ def take_picture():
     except: 
         pass
     
-    print("ISO:", current_settings.iso)
-    print('Shutter speed', current_settings.shutter_speed)
-
     if current_settings is not None:
+        print("ISO:", current_settings.iso)
+        print('Shutter speed', current_settings.shutter_speed)
+        
         camera = picamera.PiCamera()
         camera.iso = current_settings.iso
         camera.shutter_speed = current_settings.shutter_speed
-        sleep(3)
     else:
         camera = picamera.PiCamera()
 
