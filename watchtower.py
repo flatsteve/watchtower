@@ -11,6 +11,10 @@ app.config['SECRET_KEY'] = '\xfb\x12\xdf\xa1@i\xd6>V\xc0\xbb\x8fp\x16#Z\x0b\x81\
 app.register_blueprint(api, url_prefix='/api')
 db.init_app(app)
 
+@app.context_processor
+def inject_active():
+    return dict(active=config.system_active)
+
 @app.route('/', methods=['GET'])
 def index():
     images = get_images()
@@ -25,8 +29,7 @@ def index():
             })
 
     return render_template('index.html', 
-            images=image_list,
-            active=config.system_active
+            images=image_list
 		    )
 
 @app.route('/settings', methods=['GET'])

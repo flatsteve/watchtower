@@ -11,6 +11,18 @@
 	</head>
 	
     <body>
-        {% block content %}{% endblock %}
+        <div class="header">
+            <h1 class="title {{ 'title--active' if active else 'title--inactive'}}">
+                <a href="{{url_for('index')}}">WATCHTOWER<br/>1200</a>
+            </h1>
+
+            <form method="post" action="{{ url_for('api.toggle_active') }}">
+                <button class="button button--big {{ 'button--inactive' if not active }}" type="submit">
+                    {{ 'Deactivate' if active else 'Activate' }}
+                </button>
+            </form>
+        </div>
+
+       {% block content %}{% endblock %}
   	</body>
 </html>

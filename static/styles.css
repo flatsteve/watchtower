@@ -11,11 +11,15 @@ body {
     margin: 0;
 }
 
-.title--active {
+.title a {
+    text-decoration: none;
+}
+
+.title--active a {
     color: #69B111;
 }
 
-.title--inactive {
+.title--inactive a {
     color: #C62D32;
 }
 
