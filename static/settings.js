@@ -7,6 +7,14 @@
     });
 
     speedInput.addEventListener("input", event => {
-        document.getElementById("speed-label").innerHTML = Math.round(event.target.value / 100000);
+        const val = event.target.value;
+
+        if(val === "0") {
+            label = "Auto";
+        } else {
+            label = `${event.target.value / 1000000}s`;
+        }
+
+        document.getElementById("speed-label").innerHTML = label;
     }); 
 })();

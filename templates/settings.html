@@ -4,7 +4,7 @@
     <div>
         <form method="post" action="{{ url_for('api.camera_settings') }}">
             <div>
-                <label>ISO setting: <span id="iso-label">{{settings.iso}}</span></label>
+                <label>ISO: <span id="iso-label">{{settings.iso}}</span></label>
                 
                 <input type="range" id="iso-input" name="iso" list="iso" min="0" max="800" step="100" value="{{settings.iso}}">
                 
@@ -26,21 +26,23 @@
 
                 <datalist id="speed">
                   <option value="0" label="Auto">
-                  <option value="20000" label="200">
-                  <option value="50000" label="500">
-                  <option value="100000" label="1">
-                  <option value="200000" label="2">
-                  <option value="500000" label="5">
-                  <option value="6000000" label="60">
+                  <option value="50000" label="0.05s">
+                  <option value="100000" label="0.1s">
+                  <option value="200000" label="0.2s">
+                  <option value="500000" label="0.5s">
+                  <option value="1000000" label="1s">
+                  <option value="2000000" label="2s">
+                  <option value="3000000" label="3s">
+                  <option value="6000000" label="6s">
                 </datalist>
             </div>
 
-            <button class="button button--big">
-                Test settings
+            <button type="submit" class="button button--big">
+                Save settings
             </button>
         </form>
 
-        <a href="{{url_for('index')}}">Home</a>
+        <p><a href="{{url_for('index')}}">Home</a></p>
     </div>
 
     <script src="{{ url_for('static', filename='settings.js') }}"></script>
