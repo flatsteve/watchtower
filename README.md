@@ -1,4 +1,7 @@
-## Running in development
+# Watchtower 1200
+Home security for thrifty nerds
+
+### Running in development
 
 * `watchtower`
 * `python watchtower.py` 
