@@ -21,9 +21,8 @@ body {
 
 .images {
 	display: grid;
-	grid-gap: 1rem;
+	grid-gap: 1.25rem;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-auto-rows: minmax(100%, 190px);
 }
 
 .image {
@@ -99,7 +98,7 @@ body {
 .button--fab {
     border: 2px solid #222120;
     position: fixed;
-    bottom: 2rem;
+    bottom: 1.25rem;
     border-radius: 50%;
     right: 1.25rem;
     height: 6rem;

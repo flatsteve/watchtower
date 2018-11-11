@@ -14,21 +14,28 @@
     </div>
 
     <div class="images">
-        {%- for image in images %}
-        <div class="image">
-            <a href="{{ image['url'] }}"><img src="{{ image['url'] }}"/></a>
-            
-            <div class="image__footer"> 
-                <h4>{{ image['date'] }}</h4>
-            
-                <form method="post" action="{{ url_for('api.picture', url=image['url']) }}">
-                    <button  class="button" type="submit">
-                        Delete
-                    </button>
-                </form>
+        {% if images %}
+            {%- for image in images %}
+            <div class="image">
+                <a href="{{ image['url'] }}"><img src="{{ image['url'] }}"/></a>
+                
+                <div class="image__footer"> 
+                    <h4>{{ image['date'] }}</h4>
+                
+                    <form method="post" action="{{ url_for('api.picture', url=image['url']) }}">
+                        <button  class="button" type="submit">
+                            Delete
+                        </button>
+                    </form>
+                </div>
             </div>
-        </div>
-        {%- endfor %}
+            {%- endfor %}
+        {% else %}
+            <p>
+                No images found, so either no one has broke in or your code is broken... think about what is more
+                likely.
+            </p>
+        {% endif%}
     </div>
 
     <form method="post" action="{{ url_for('api.picture') }}">
