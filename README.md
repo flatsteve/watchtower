@@ -1,11 +1,12 @@
 ## Running in development
 
+* `watchtower`
 * `python watchtower.py` 
 * Open in [browser](http://192.168.0.116:5000)
 
 
-### Commnands for running the application on the Pi
+### Commands for running the application on the Pi
 
-* watchtower-start
-* watchtower-restart
-* watchtower-stop
+* `watchtower-start`
+* `watchtower-restart`
+* `watchtower-stop`
